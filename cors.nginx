@@ -1,0 +1,15 @@
+server {
+    listen 80;
+    server_name cors.subtechs.com;
+
+    root /opt/projects/cors/bin;
+
+    location /static {
+      try_files $uri /images/default.gif;
+    }
+
+    location / {
+        include         uwsgi_params;
+        uwsgi_pass      unix:/tmp/cors.sock;
+    }
+}

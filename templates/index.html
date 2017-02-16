@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Cors Usage</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="//getbootstrap.com/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+    
+    <!-- Custom styles for this template -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.7/css/bootstrap-dialog.min.css" rel="stylesheet">
+    
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.23.0/codemirror.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/4.10.0/addon/fold/foldgutter.min.css" integrity="sha256-DxH334IZZZu8nBibEkpsDCb5nhqBlNXeWCZsW4sN0to=" crossorigin="anonymous" />    
+
+  <style type="text/css">
+    .top-buffer {
+      padding-top:5px;
+    }
+    .CodeMirror {
+      border: 1px solid #d2cfcf;
+    }
+  </style>
+
+
+</head>
+<body class='container'>
+  <div class='row'>
+    <h3><a id="CORS_service_0"></a>CORS service</h3>
+    <h4><a id="Webscraping_service_to_convert_target_HTML_elements_to_JSON_1"></a>Webscraping service to convert target HTML elements to JSON</h4>
+  </div>
+  <div class='row'>
+    <div class='col-md-12'>
+      <h5><a id="Usage_2"></a>Usage:</h5>
+      <ol>
+        <li>http://<span class='base-href'></span>/[path]?url=[url]</li>
+        <li>path: ‘/’ seperated list of tags and modifiers</li>
+        <li>url: urlencoded source url</li>
+      </ol>
+    </div>
+  </div>
+  <div class='row'>
+    <div class='col-md-12'>
+      <h6 class='col-md-12'>Tag Path Modifiers</h6>
+      <div class='col-md-12'>
+        <ul>
+          <li>[x[,y]]: Processes tags in range of x[ -&gt;y]</li>
+          <li>{tag, tag, tag’…}’: processes tags with initial result set</li>
+          <li>‘.,#,[]’: ‘CSS selectors’</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class='row'>
+    <div class='col-md-12'>
+      <h6 class='col-md-12'>keywords</h6>
+      <div class='col-md-12'>
+        <ul>
+          <li>sort: ‘Sorts Results by content in ascending order’,</li>
+          <li>clean: ‘Strips all HTML from result items contents’,</li>
+          <li>.json: ‘Return results as json’</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class='row'>
+    <div class='col-md-12'>
+      <h4>Notes:</h4>
+      <div class='col-md-12'>
+        All <strong>href</strong>s and img <strong>src</strong>s are converted to absolute urls
+      </div>
+    </div>
+  </div>
+  <div class='row'>
+    <div class='col-md-12'>
+      <h4>Examples:</h4>
+      <ol>
+        <li> 
+          <p class='top-buffer'><b>Headlines From NYT homepage: </b><br />
+            <span class='example'>
+              <a href="/h2.story-heading/a.json?url=https://www.nytimes.com/">
+              <code>http://<span class='base-href'></span>/h2.story-heading/a.json?url=https://www.nytimes.com/</code>
+              </a>
+            </span>
+          </p>
+        </li>
+        <li> 
+          <p class='top-buffer'><b>Headlines From NYT homepage column 1:</b><br />
+            <span class='example'>
+              <a href="/div.a-column/h2.story-heading/a.json?url=https://www.nytimes.com/">
+                <code>http://<span class='base-href'></span>/div.a-column/h2.story-heading/a.json?url=https://www.nytimes.com/</code>
+              </a>
+            </span>
+          </p>
+        </li>
+        <li> 
+          <p class='top-buffer'><b>3rd Headline From NYT homepage OP-ED Contributor list:</b><br />
+            <span class='example'>
+              <a href="/div.opinion-c-col-right-region/div/ul/li/h2.story-heading/a.json/%5B1,2%5D?url=https://www.nytimes.com/">
+                <code>http://<span class='base-href'></span>/div.opinion-c-col-right-region/div/ul/li/h2.story-heading/a.json/[1,2]?url=https://www.nytimes.com/</code>
+              </a>
+            </span>
+          </p>
+        </li>
+      </ol>
+    </div>
+  </div>
+    <script type="text/javascript" src="//code.jquery.com/jquery-2.2.4.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="//getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.23.0/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.23.0/addon/lint/json-lint.min.js" integrity="sha256-fZX6WayEeRXF9PR8GjWJIDcVkE5Htvd+NPEWmvRl2Y4=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/4.10.0/addon/fold/foldcode.min.js" integrity="sha256-SJss0Qnebba4/yBQ0PZKMb29GLfpHhQBmqgQrq2WM0s=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/4.10.0/addon/fold/foldgutter.min.js" integrity="sha256-gQqJolH+RcY6NIXQhGR7AjGP2sR7Sz6zV2ocICAEQYY=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/4.10.0/addon/fold/brace-fold.min.js" integrity="sha256-XIEI8/vZ0x6gNqdVMVGBXVkbdllwqbUIx5ECJK2zjFY=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="/static/js/index.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.14.0/mode/javascript/javascript.js" integrity="sha256-2bqzJD6sk7XzpcoofKGF01i/fZFwHHu4GiDFXVIu7Ls=" crossorigin="anonymous"></script>
+</body>
+</html>
