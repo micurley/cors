@@ -16,6 +16,7 @@ server {
     }
 
     location / {
+        add_header X-Cache $upstream_cache_status;
         proxy_cache cors;
         proxy_cache_use_stale error timeout http_500 http_502 http_503 http_504;
 
