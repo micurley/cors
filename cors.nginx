@@ -1,11 +1,11 @@
-proxy_cache_path  /tmp/cors
+uwsgi_cache_path  /tmp/cors
                   levels=1:2
                   keys_zone=cors:10m
                   max_size=10g
                   inactive=60m
                   use_temp_path=off;
 
-proxy_cache_key "$scheme$request_method$host$request_uri";
+uwsgi_cache_key "$scheme$request_method$host$request_uri";
 
 server {
     listen 80;
@@ -18,8 +18,8 @@ server {
     }
 
     location / {
-        proxy_cache cors;
-        proxy_cache_use_stale error timeout http_500 http_502 http_503 http_504;
+        uwsgi_cache cors;
+        uwsgi_cache_use_stale error timeout http_500 http_502 http_503 http_504;
 
         add_header 'Access-Control-Allow-Origin' '*';
         add_header 'Access-Control-Allow-Credentials' 'true';
