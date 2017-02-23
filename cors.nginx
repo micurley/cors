@@ -3,16 +3,9 @@ uwsgi_cache_path  /tmp/cors levels=1:2 keys_zone=cors:10m max_size=1g inactive=6
 uwsgi_cache_key "$scheme$request_method$host$request_uri";
 
 map $request_method $purge_method {
-    PURGE 1;
+    HEAD 1;
     default 0;
 }
-
-map  $arg_clearcache $purge_method {
-    PURGE 1;
-    default $purge_method;
-}
-
-error_page 477 = @purge;
 
 server {
     listen 80;
@@ -29,17 +22,6 @@ server {
     }
 
     location / {
-        add_header 'Access-Control-Allow-Origin' '*';
-        add_header 'Access-Control-Allow-Credentials' 'true';
-        add_header 'Access-Control-Allow-Methods' 'GET, POST, PURGE';
-        add_header 'Access-Control-Allow-Headers' 'DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type';
-        add_header 'X-Cache-Status' $upstream_cache_status;
-
-
-        if ($request_method = PURGE) {
-          return 477;
-        }
-
         uwsgi_cache cors;
         uwsgi_cache_purge $purge_method;
         uwsgi_cache_valid     300m; # Required for caching to work at all
@@ -47,14 +29,13 @@ server {
 
         #uwsgi_cache_use_stale error timeout http_500 http_502 http_503 http_504;
 
+        add_header 'Access-Control-Allow-Origin' '*';
+        add_header 'Access-Control-Allow-Credentials' 'true';
+        add_header 'Access-Control-Allow-Methods' 'GET, POST, PURGE';
+        add_header 'Access-Control-Allow-Headers' 'DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type';
+        add_header 'X-Cache-Status' $upstream_cache_status;
+
         include         uwsgi_params;
         uwsgi_pass      unix:/tmp/cors.sock;
-    }
-
-    location @purge {
-      add_header 'X-Cache-Status' 'PURGED';
-      uwsgi_cache cors;
-      uwsgi_cache_purge $purge_method;
-      return 200;
     }
 }
