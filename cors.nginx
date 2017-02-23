@@ -7,6 +7,11 @@ map $request_method $purge_method {
     default 0;
 }
 
+map  $arg_clearcache $purge_method {
+    PURGE 1;
+    default $purge_method;
+}
+
 
 server {
     listen 80;
