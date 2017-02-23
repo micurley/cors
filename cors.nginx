@@ -53,6 +53,7 @@ server {
 
     location @purge {
       add_header 'X-Cache-Status' 'PURGED';
+      uwsgi_cache cors;
       uwsgi_cache_purge $purge_method;
       return 200;
     }
