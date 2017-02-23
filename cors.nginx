@@ -35,12 +35,12 @@ server {
         add_header 'X-Cache-Status' $upstream_cache_status;
 
         uwsgi_cache cors;
+        uwsgi_cache_purge $purge_method;
         uwsgi_cache_valid     300m; # Required for caching to work at all
         uwsgi_cache_valid 404 1m;
 
         if ($request_method = PURGE ) {
           add_header 'X-Cache-Status' 'PURGED';
-          uwsgi_cache_purge $purge_method;
         }
 
         #uwsgi_cache_use_stale error timeout http_500 http_502 http_503 http_504;
