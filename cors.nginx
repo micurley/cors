@@ -2,7 +2,7 @@ uwsgi_buffering on;
 uwsgi_cache_path  /tmp/cors levels=1:2 keys_zone=cors:10m max_size=1g inactive=60m;
 
 map $request_method $delete_cache_item {
-    DELETE 1;
+    GET 1;
     default 0;
 }
 
@@ -21,8 +21,6 @@ server {
     }
 
     location / {
-        dav_methods  DELETE;
-
         uwsgi_cache cors;
         uwsgi_cache_purge $delete_cache_item;
         uwsgi_cache_key "$scheme$host$request_uri";
