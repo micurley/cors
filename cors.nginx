@@ -1,13 +1,11 @@
+uwsgi_cache_path  /tmp/cors levels=1:2 keys_zone=cors:10m max_size=10g inactive=60m;
+uwsgi_cache_key "$scheme$request_method$host$request_uri";
+
 server {
     listen 80;
     server_name cors.subtechs.com;
 
     # Cache Config
-    uwsgi_cache_path  /tmp/cors levels=1:2 keys_zone=cors:10m max_size=10g inactive=60m;
-    uwsgi_cache_key "$scheme$request_method$host$request_uri";
-
-
-
     uwsgi_cache_background_update on
     uwsgi_cache_bypass $cookie_nocache $arg_nocache$arg_comment;
     uwsgi_cache_bypass $http_pragma    $http_authorization;
