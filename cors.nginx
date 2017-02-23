@@ -52,7 +52,6 @@ server {
     }
 
     location @purge {
-      access_log /var/log/nginx/caching.purge.log;
       add_header 'X-Cache-Status' 'PURGED';
       uwsgi_cache_purge cors "$scheme$request_method$host$request_uri";
       return 200;
