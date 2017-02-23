@@ -1,6 +1,11 @@
 uwsgi_buffering on;
 uwsgi_cache_path  /tmp/cors levels=1:2 keys_zone=cors:10m max_size=1g inactive=60m;
 
+map $request_method $purge_method {
+    HEAD 1;
+    default 0;
+}
+
 server {
     listen 80;
     server_name cors.subtechs.com;
@@ -16,15 +21,9 @@ server {
     }
 
     location / {
-        map $request_method $purge {
-            HEAD "$scheme$request_method$host$request_uri";
-            default 0;
-        }
-
-        sendfile off;
         uwsgi_cache cors;
-        uwsgi_cache_key "$scheme$request_method$host$request_uri";
-        uwsgi_cache_purge $purge;
+        uwsgi_cache_key "$scheme$host$request_uri";
+        uwsgi_cache_purge $purge_method;
         uwsgi_cache_valid     300m; # Required for caching to work at all
         uwsgi_cache_valid 404 1m;
 
