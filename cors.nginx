@@ -2,7 +2,7 @@ uwsgi_buffering on;
 uwsgi_cache_path  /tmp/cors levels=1:2 keys_zone=cors:10m max_size=1g inactive=60m;
 
 map $request_method $delete_cache_item {
-    GET 1;
+    HEAD 1;
     default 0;
 }
 
@@ -31,7 +31,7 @@ server {
 
         add_header 'Access-Control-Allow-Origin' '*';
         add_header 'Access-Control-Allow-Credentials' 'true';
-        add_header 'Access-Control-Allow-Methods' 'GET, DELETE';
+        add_header 'Access-Control-Allow-Methods' 'GET, HEAD';
         add_header 'Access-Control-Allow-Headers' 'DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type';
         add_header 'X-Cache-Status' $upstream_cache_status;
         add_header 'X-Cache-Request' $delete_cache_item;
