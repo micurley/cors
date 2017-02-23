@@ -12,6 +12,7 @@ map  $arg_clearcache $purge_method {
     default $purge_method;
 }
 
+error_page 477 = @purge;
 
 server {
     listen 80;
@@ -35,7 +36,6 @@ server {
         add_header 'X-Cache-Status' $upstream_cache_status;
 
 
-        error_page 477 = @purge;
         if ($request_method = PURGE) {
           return 477;
         }
@@ -53,7 +53,7 @@ server {
 
     location @purge {
       add_header 'X-Cache-Status' 'PURGED';
-      uwsgi_cache_purge cors "$scheme$request_method$host$request_uri";
+      uwsgi_cache_purge $purge_method;
       return 200;
     }
 }
