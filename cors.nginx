@@ -25,6 +25,7 @@ server {
     location / {
         uwsgi_cache cors;
         uwsgi_cache_purge $purge_method;
+        uwsgi_cache_purge $arg_clearcache;
         uwsgi_cache_valid     300m; # Required for caching to work at all
         uwsgi_cache_valid 404 1m;
 
