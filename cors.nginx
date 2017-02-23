@@ -1,4 +1,5 @@
-uwsgi_cache_path  /tmp/cors levels=1:2 keys_zone=cors:10m max_size=10g inactive=60m;
+uwsgi_buffering on;
+uwsgi_cache_path  /tmp/cors levels=1:2 keys_zone=cors:10m max_size=1g inactive=60m;
 uwsgi_cache_key "$scheme$request_method$host$request_uri";
 
 server {
