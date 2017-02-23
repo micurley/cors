@@ -21,6 +21,8 @@ server {
     }
 
     location / {
+        dav_methods  DELETE;
+
         uwsgi_cache cors;
         uwsgi_cache_purge $delete_cache_item;
         uwsgi_cache_key "$scheme$host$request_uri";
